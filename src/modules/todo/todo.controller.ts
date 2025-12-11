@@ -3,10 +3,10 @@ import { todoService } from "./todo.service";
 
 
 const createTodos = async (req: Request, res: Response) => {
-  const { user_id, title } = req.body;
+  // const { user_id, title } = req.body;
 
   try {
-    const result = await todoService.createTodos(user_id, title)
+    const result = await todoService.createTodo(req.body)
 
     res.status(200).json({
       success: true,
@@ -23,7 +23,7 @@ const createTodos = async (req: Request, res: Response) => {
 
 const getTodos = async (req: Request, res: Response) => {
   try {
-    const result = await todoService.getTodos()
+    const result = await todoService.getTodo()
 
     res.status(201).json({
       success: false,
@@ -38,7 +38,7 @@ const getTodos = async (req: Request, res: Response) => {
   }
 }
 
-const getSingleTodo = async (req: Request, res: Response) => {
+const getSingleTodos = async (req: Request, res: Response) => {
   try {
     const result = await todoService.getSingleTodo(req.params.id as string)
 
@@ -63,7 +63,7 @@ const getSingleTodo = async (req: Request, res: Response) => {
   }
 }
 
-const updateTodo = async (req: Request, res: Response) => {
+const updateTodos = async (req: Request, res: Response) => {
   const { user_id, title } = req.body;
   try {
     const result = await todoService.updateTodo(user_id, title, req.params.id!)
@@ -88,7 +88,7 @@ const updateTodo = async (req: Request, res: Response) => {
   }
 }
 
-const deleteTodo = async (req: Request, res: Response) => {
+const deleteTodos = async (req: Request, res: Response) => {
   try {
     const result = await todoService.deleteTodo(req.params.id!)
 
@@ -115,7 +115,7 @@ const deleteTodo = async (req: Request, res: Response) => {
 export const todoController = {
   createTodos,
   getTodos,
-  getSingleTodo,
-  updateTodo,
-  deleteTodo
+  getSingleTodos,
+  updateTodos,
+  deleteTodos
 }

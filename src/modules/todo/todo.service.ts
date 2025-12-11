@@ -1,56 +1,56 @@
 import { pool } from "../../config/db";
 
-
-const createTodos = async (user_id:string, title:string) => {
-    const result =  await pool.query(
-      `
+const createTodo = async (payload: Record<string, unknown>) => {
+  const {user_id, title} = payload
+  const result = await pool.query(
+    `
       INSERT INTO todos(user_id, title) VAlUES ($1,$2) RETURNING *`,
-      [user_id, title]
-    );
-    return result
-}
+    [user_id, title]
+  );
+  return result;
+};
 
-const getTodos = async () => {
-   const result = await pool.query(`
+const getTodo = async () => {
+  const result = await pool.query(`
       SELECT * FROM todos
       `);
-      return result
-}
+  return result;
+};
 
-const getSingleTodo = async (id:string) => {
-   const result =  await pool.query(
-      `
+const getSingleTodo = async (id: string) => {
+  const result = await pool.query(
+    `
       SELECT * FROM todos WHERE id = $1
       `,
-      [id]
-    );
-    return result
-}
+    [id]
+  );
+  return result;
+};
 
-const updateTodo = async (user_id:string, title:string, id:string) => {
+const updateTodo = async (user_id: string, title: string, id: string) => {
   const result = await pool.query(
-      `
+    `
       UPDATE todos SET user_id = $1, title = $2 WHERE id=$3 RETURNING *
       `,
-      [user_id, title, id]
-    );
-    return result
-}
+    [user_id, title, id]
+  );
+  return result;
+};
 
-const deleteTodo = (id:string) => {
+const deleteTodo = (id: string) => {
   const result = pool.query(
-      `
+    `
         DELETE FROM todos WHERE id = $1
         `,
-      [id]
-    );
-    return result
-}
+    [id]
+  );
+  return result;
+};
 
 export const todoService = {
-    createTodos,
-    getTodos,
-    getSingleTodo,
-    updateTodo,
-    deleteTodo
-}
+  createTodo,
+  getTodo,
+  getSingleTodo,
+  updateTodo,
+  deleteTodo,
+};
